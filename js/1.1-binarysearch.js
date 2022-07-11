@@ -24,6 +24,7 @@ function search(nums, target) {
 //one line solution
 function search(nums, target) {
     return nums.indexOf(target);
+    // return nums.findIndex(num => num === target); 
 };
 
 
@@ -53,13 +54,54 @@ var solution = function (isBadVersion) {
         while (start < end) {
             let pivot = Math.floor((start + end) / 2);
             if (isBadVersion(pivot)) {
-                end = pivot;
+                end = pivot; //if the midpoint is a bad version, look for bad versions before
             } else {
-                start = pivot + 1;
+                start = pivot + 1; //if the midpoint is not a bad version, look for the one after that till find the first bad version
             }
         }
-        return start;
+        return start; //this should be the first bad version
     };
 };
 
 // console.log(solution(isBadVersion)(5))
+
+/* 35 Search Insert Position
+Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+Time O(log n)
+*/
+
+function searchInsert(nums, target) {
+    let left = 0;
+    let right = nums.length - 1;
+    while (left <= right) {
+        let pivot = Math.floor((left + right) / 2);
+        if (nums[pivot] === target) {
+            return pivot;
+        } else if (nums[pivot] > target) {
+            right = pivot - 1;
+        } else {
+            left = pivot + 1;
+        }
+    }
+    return left;
+}
+
+//another solution
+function searchInsert(nums, target) {
+    return binarySearch(nums, target, 0, nums.length - 1);
+};
+
+
+function binarySearch(array, target, start, end) {
+    // If the target is less then the very last item then insert it at that item index
+    // because anything index less then that has already been confirmed to be less then the target.
+    // Otherwise insert it at that item index + 1
+    // because any index grater then that has already been confirmed to be greater then the target
+    if (start > end) return start;
+    const midPoint = Math.floor((start + end) / 2);
+    if (array[midPoint] === target) return midPoint;
+    // search the left side
+    if (array[midPoint] > target) return binarySearch(array, target, start, midPoint - 1);
+    // search the right side
+    if (array[midPoint] < target) return binarySearch(array, target, midPoint + 1, end);
+}
