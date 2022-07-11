@@ -105,3 +105,68 @@ function binarySearch(array, target, start, end) {
     // search the right side
     if (array[midPoint] < target) return binarySearch(array, target, midPoint + 1, end);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* more binary search practice */
+/* 69. Sqrt(x)
+Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.
+Note: You are not allowed to use any built-in exponent function or operator, such as pow(x, 0.5) or x ** 0.5.
+*/
+
+function mySqrt(x) {
+    let left = 1;
+    let right = Math.floor(x / 2) + 1;
+
+    while (left <= right) {
+        let mid = Math.floor((left + right) / 2);
+        if (mid * mid > x) {
+            right = mid - 1;
+        } else if (mid * mid < x) {
+            left = mid + 1;
+        } else {
+            return mid;
+        }
+    }
+    return right;
+}
+
+
+/* 268. Missing Number
+Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+*/
+function missingNumber(nums) {
+    let sum = nums.length;
+    for (let i = 0; i < nums.length; i++) {
+        sum += i - nums[i];
+    }
+    return sum;
+}
+
+
+/* another solution */
+function missingNumber(nums) {
+    // construct array of size n+1, to leave a spot for the missing element.
+    // Assign each val to -1 so we can see which position was not filled
+    // O(n)
+    const res = new Array(nums.length + 1).fill(-1);
+
+    // "sort" the elements by assigning to the array based on val
+    // O(n)
+    for (const num of nums) {
+        res[num] = num;
+    }
+
+    // the remaining -1 index is the missing value
+    // O(n-1)
+    return res.indexOf(-1);
+};
