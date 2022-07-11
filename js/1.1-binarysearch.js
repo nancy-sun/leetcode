@@ -1,3 +1,25 @@
+
+//get back to two sum just to make myself feel better..from struggling with binary search😢
+var twoSum = function (nums, target) {
+    if (nums.length === 2) return [0, 1];
+    let lookup = new Map();
+    for (let i = 0; i < nums.length; i++) {
+        let diff = target - nums[i];
+        if (lookup.has(diff)) return [i, lookup.get(diff)];
+        lookup.set(nums[i], i);
+    }
+};
+
+// console.log(twoSum([2, 7, 11, 15], 18))
+
+
+
+
+
+
+
+
+
 /* Binary Search - 07/09/2022*/
 
 /* 704 Binary Search 
@@ -170,3 +192,6 @@ function missingNumber(nums) {
     // O(n-1)
     return res.indexOf(-1);
 };
+
+
+
