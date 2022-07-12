@@ -13,16 +13,10 @@ var twoSum = function (nums, target) {
 // console.log(twoSum([2, 7, 11, 15], 18))
 
 
-var isPalindrome = function (x) {
-    if (x < 0) return false;
-    const arr = x.toString().split("");
-    const reversed = arr.reverse().join("");
-    if (x === parseInt(reversed)) {
-        return true;
-    } else {
-        return false;
-    }
-};
+function isPalindrome(x) {
+    let rev = parseInt(x.toString().split("").reverse().join(""));
+    return rev === x;
+}
 
 //blew my mind solution
 var isPalindrome = function (x) {
@@ -194,22 +188,23 @@ function missingNumber(nums) {
 
 
 /* another solution */
-function missingNumber(nums) {
-    // construct array of size n+1, to leave a spot for the missing element.
-    // Assign each val to -1 so we can see which position was not filled
-    // O(n)
-    const res = new Array(nums.length + 1).fill(-1);
+// function missingNumber(nums) {
+//     // construct array of size n+1, to leave a spot for the missing element.
+//     // Assign each val to -1 so we can see which position was not filled
+//     // O(n)
+//     const res = new Array(nums.length + 1).fill(-1);
 
-    // "sort" the elements by assigning to the array based on val
-    // O(n)
-    for (const num of nums) {
-        res[num] = num;
-    }
+//     // "sort" the elements by assigning to the array based on val
+//     // O(n)
+//     for (const num of nums) {
+//         res[num] = num;
+//     }
 
-    // the remaining -1 index is the missing value
-    // O(n-1)
-    return res.indexOf(-1);
-};
+//     // the remaining -1 index is the missing value
+//     // O(n-1)
+//     return res.indexOf(-1);
+// };
+
 
 
 
