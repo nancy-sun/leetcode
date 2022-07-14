@@ -69,3 +69,61 @@ console.log(majorityElement3([3, 2, 3]))
 
 
 /* ------------------------------------------DAY 2------------------------------------------*/
+
+/* 1. Two Sum */
+/* hashmap */
+function twoSumM(nums, target) {
+    if (nums.length === 2) return [0, 1];
+    let lookup = new Map();
+    for (let i = 0; i < nums.length; i++) {
+        let diff = target - nums[i];
+        if (lookup.has(diff)) {
+            return [lookup.get(diff), i];
+        }
+        lookup.set(nums[i], i);
+    }
+}
+
+// console.log(twoSumM([2, 7, 11, 15], 9))
+
+/* object */
+function twoSum(nums, target) {
+    if (nums.length === 2) return [0, 1];
+    let lookup = {};
+    for (let i = 0; i < nums.length; i++) {
+        let diff = target - nums[i];
+        if (lookup[diff] !== undefined) {
+            return [lookup[diff], i];
+        }
+        lookup[nums[i]] = i;
+    }
+}
+
+
+
+/* 88. Merge Sorted Array 
+Given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+The final sorted array should not be returned by the function, but instead be stored inside the array nums1. 
+To accommodate this, nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n.
+
+O(m+n)
+*/
+
+function merge(nums1, m, nums2, n) {
+    let i = 0;
+    let j = 0;
+    nums1.splice(m);
+    while (j < nums2.length) {
+        if (nums1[i] === undefined || nums1[i] > nums2[j]) {
+            nums1.splice(i, 0, nums2[j]);
+            j++;
+        }
+        i++;
+    }
+}
+
+
+
+
+/* ------------------------------------------DAY 3------------------------------------------*/
