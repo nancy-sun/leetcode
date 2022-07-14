@@ -124,6 +124,54 @@ function merge(nums1, m, nums2, n) {
 }
 
 
+/* 26. remove duplicates from sorted array */
+
+var removeDuplicates = function (nums) {
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] === nums[i + 1]) {
+            nums.splice(i, 1);
+            i--;
+        }
+    }
+};
+
+
+/* 121. Best Time to Buy and Sell stock */
+var maxProfit = function (prices) {
+    let buy = prices[0];
+    let max = 0;
+    for (let i = 1; i < prices.length; i++) {
+        if (prices[i] < buy) {
+            buy = prices[i]; // buy a lowest price
+        }
+        max = Math.max(max, (prices[i] - buy));
+    }
+    return max;
+};
+
+
+/* 696. Count Binary Substrings 
+Note - if there are same numbers of 0 and 1, it's considered a substring. eg. "000111" - 000111 will count 1
+*/
+function countBinarySubstr(s) {
+    let prev = 0;
+    let curr = 1;
+    let result = 0;
+
+    for (let i = 1; i < s.length; i++) {
+        if (s[i - 1] != s[i]) {
+            result += Math.min(curr, prev);
+            prev = curr;
+            curr = 0;
+        }
+        curr++;
+    }
+    return result + Math.min(curr, prev);
+}
+
+
+console.log(countBinarySubstr("01"))
+
 
 
 /* ------------------------------------------DAY 3------------------------------------------*/
