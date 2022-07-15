@@ -139,11 +139,12 @@ var removeDuplicates = function (nums) {
 /* 121. Best Time to Buy and Sell stock */
 var maxProfit = function (prices) {
     let buy = prices[0];
-    let max = 0;
+    let max = -Infinity;
     for (let i = 1; i < prices.length; i++) {
-        if (prices[i] < buy) {
-            buy = prices[i]; // buy a lowest price
-        }
+        // if (prices[i] < buy) {
+        //     buy = prices[i]; // buy a lowest price
+        // }
+        buy = Math.min(buy, prices[i]);
         max = Math.max(max, (prices[i] - buy));
     }
     return max;
@@ -175,3 +176,31 @@ console.log(countBinarySubstr("01"))
 
 
 /* ------------------------------------------DAY 3------------------------------------------*/
+
+/* 350. Intersection of Two Arrays II 
+Given two integer arrays nums1 and nums2, return an array of their intersection. 
+Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
+*/
+function intersect(nums1, nums2) {
+    let lookup = new Map();
+    let result = [];
+    for (let i = 0; i < nums1.length; i++) {
+        if (lookup.has(nums1[i])) {
+            lookup.set(nums1[i], (lookup.get(nums1[i]) + 1));
+        } else {
+            lookup.set(nums1[i], 1)
+        }
+    }
+    for (let i = 0; i < nums2.length; i++) {
+        if (lookup.get(nums2[i])) {
+            lookup.set(nums2[i], (lookup.get(nums2[i]) - 1));
+            result.push(nums2[i]);
+        } else {
+            continue;
+        }
+    }
+    return result;
+}
+
+// console.log(intersect([4, 9, 5], [9, 4, 9, 8, 4]));
+
