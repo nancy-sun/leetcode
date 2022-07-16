@@ -11,7 +11,12 @@ function containsDuplicate(nums) {
     return false;
 }
 
-console.log(containsDuplicate([3, 3]))
+function containsDuplicate2(nums) {
+    let set = new Set(nums);
+    return set.size !== nums.length;
+}
+
+console.log(containsDuplicate2([3, 3]))
 
 /* 53. Maximum Subarray 
 Kadane's Algorithm explanation: https://www.youtube.com/watch?v=86CQq3pKSUw
@@ -277,3 +282,125 @@ function generate2(numRows) {
 }
 
 // console.log(generate2(5))
+
+
+
+/* ------------------------------------------DAY 5------------------------------------------*/
+/* 36. Valid Sudoku 
+Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+Each row must contain the digits 1-9 without repetition.
+Each column must contain the digits 1-9 without repetition.
+Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+Note:
+
+A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+Only the filled cells need to be validated according to the mentioned rules.
+*/
+console.log(isValidSudoku([["8", "3", ".", ".", "7", ".", ".", ".", "."], ["6", ".", ".", "1", "9", "5", ".", ".", "."], [".", "9", "8", ".", ".", ".", ".", "6", "."], ["8", ".", ".", ".", "6", ".", ".", ".", "3"], ["4", ".", ".", "8", ".", "3", ".", ".", "1"], ["7", ".", ".", ".", "2", ".", ".", ".", "6"], [".", "6", ".", ".", ".", ".", "2", "8", "."], [".", ".", ".", "4", "1", "9", ".", ".", "5"], [".", ".", ".", ".", "8", ".", ".", "7", "9"]]))
+
+function isValidSudoku(board) {
+    /* could also declare as sets, 
+    set.has() to check if it has the item, set.add() to push new item to set
+    set.clear() to empty the set
+
+    // let col = new Set();
+    // let box = new Set();
+    // let row = new Set();
+    
+    However, it's kinda tedious to use set in this case, cuz we always check if the item already exists first
+    */
+
+    let col = [];
+    let box = [];
+    let row = [];
+
+    for (let i = 0; i < 9; i++) {
+        //empty the check array every time for a new check
+        row = [];
+        col = [];
+        box = [];
+        for (let j = 0; j < 9; j++) {
+
+            //check row
+            if (row.includes(board[i][j])) {
+                return false;
+            } else if (board[i][j] !== ".") {
+                row.push(board[i][j]);
+            }
+
+            //check column
+            if (col.includes(board[j][i])) {
+                return false;
+            } else if (board[j][i] !== ".") {
+                col.push(board[j][i]);
+            }
+
+            //check box
+            let boxItem = (board[3 * Math.floor(i / 3) + Math.floor(j / 3)][3 * (i % 3) + (j % 3)])
+            if (box.includes(boxItem)) {
+                return false;
+            } else if (boxItem !== ".") {
+                box.push(boxItem);
+            }
+        }
+    }
+    return true;
+}
+
+/* 74. Search a 2D Matrix
+Searches for a value target in an m*n integer matrix. Matrix needs to have: 
+Integers in each row are sorted from left to right.
+The first integer of each row is greater than the last integer of the previous row.
+*/
+function searchMatrix0(matrix, target) { //this is a stupid straight-forward no-brain solution lol
+    let arr = matrix.flat();
+    return arr.includes(target);
+}
+
+function searchMatrix1(matrix, target) {
+    let row;
+    for (let arr of matrix) {
+        if (arr[0] <= target && arr[arr.length - 1] >= target) {
+            row = arr;
+        }
+    }
+    if (!row) return false;
+    for (let num of row) {
+        if (num === target) return true;
+    }
+    return false;
+}
+
+//binary search O(log mn) solution
+function searchMatrix2(matrix, target) {
+    let length = matrix[0].length; //since it's a matrix, n is constant for all m
+    let start = 0;
+    let end = (matrix.length * length) - 1; //total indexes in the matrix
+    while (start <= end) {
+        let mid = Math.floor((start + end) / 2) //mid number
+        let midNum = matrix[Math.floor(mid / length)][mid % length]; //mid number in the middle array
+        if (midNum === target) return true;
+        else if (midNum < target) start = mid + 1;
+        else end = mid - 1;
+    }
+    return false;
+}
+
+//diagonal search O(m+n)
+function searchMatrix3(matrix, target) {
+    let i = 0;
+    let j = matrix[0].length - 1; //start to compare from the last index of each row
+
+    while (i < matrix.length && j >= 0) {
+        if (matrix[i][j] === target) return true;
+        if (matrix[i][j] < target) { //if the last item in the row < target, move to the next row/array
+            i++;
+        } else { //if the last item in the row > target, compare the previous index in the row
+            j--;
+        }
+    }
+    return false;
+}
+
+console.log(searchMatrix3([[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 3))
