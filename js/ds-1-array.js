@@ -380,9 +380,13 @@ function searchMatrix2(matrix, target) {
     while (start <= end) {
         let mid = Math.floor((start + end) / 2) //mid number
         let midNum = matrix[Math.floor(mid / length)][mid % length]; //mid number in the middle array
-        if (midNum === target) return true;
-        else if (midNum < target) start = mid + 1;
-        else end = mid - 1;
+        if (midNum === target) {
+            return true;
+        } else if (midNum < target) {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
     }
     return false;
 }
