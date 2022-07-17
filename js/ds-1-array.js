@@ -408,3 +408,81 @@ function searchMatrix3(matrix, target) {
 }
 
 console.log(searchMatrix3([[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]], 3))
+
+
+
+
+
+
+/* ------------------------------------------ Review ------------------------------------------*/
+/* 1207. Unique Number of Occurrences
+Given an array of integers, 
+return true if the number of occurrences of each value in the array is unique, or false otherwise.
+*/
+function uniqueOccurrences(arr) {
+    let lookup = new Map();
+    for (let num of arr) {
+        if (lookup.has(num)) {
+            lookup.set(num, lookup.get(num) + 1);
+        } else {
+            lookup.set(num, 1);
+        }
+    }
+    let values = new Set();
+    for (const value of lookup.values()) {
+        if (values.has(value)) return false;
+        values.add(value);
+    }
+    return true;
+}
+
+function uniqueOccurrences2(arr) {
+    let lookup = {};
+    for (let num of arr) {
+        lookup[num] = (lookup[num] || 0) + 1;
+    }
+    let values = Object.values(lookup);
+    let valuesSet = new Set(values);
+    if (values.length !== valuesSet.size) return false;
+    return true;
+}
+console.log(uniqueOccurrences2([1, 2, 2, 1, 1, 3]))
+
+/* 56. Merge Intervals
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, 
+return an array of the non-overlapping intervals that cover all the intervals in the input.
+*/
+function merge(intervals) {
+    if (intervals.length <= 1) return intervals;
+    let sorted = intervals.sort((a, b) => a[0] - b[0]); //sort the intervals based on the first index in each interval
+    for (let i = 1; i < sorted.length; i++) {
+        let current = sorted[i];
+        let previous = sorted[i - 1];
+        if (current[0] <= previous[1]) {
+            sorted[i] = [Math.min(previous[0], current[0]), Math.max(previous[1], current[1])]
+            sorted.splice(i - 1, 1);
+            i -= 1  //when merged array length shrinks,
+        }
+    }
+    return sorted;
+}
+console.log(merge([[1, 3], [2, 6], [8, 10], [15, 18]]));
+
+
+/* 1710. Maximum Units on a Truck
+You are assigned to put some amount of boxes onto one truck. 
+You are given a 2D array boxTypes, where boxTypes[i] = [numberOfBoxesi, numberOfUnitsPerBoxi]:
+numberOfBoxesi is the number of boxes of type i.
+numberOfUnitsPerBoxi is the number of units in each box of the type i.
+
+You are also given an integer truckSize, which is the maximum number of boxes that can be put on the truck. 
+You can choose any boxes to put on the truck as long as the number of boxes does not exceed truckSize.
+
+Return the maximum total number of units that can be put on the truck.
+*/
+
+function maximumUnits(boxTypes, truckSize) {
+    let dictionary = new Map(boxTypes);
+
+}
+console.log(maximumUnits([[1, 3], [2, 2], [3, 1]], 4));
