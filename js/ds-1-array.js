@@ -461,7 +461,7 @@ function merge(intervals) {
         if (current[0] <= previous[1]) {
             sorted[i] = [Math.min(previous[0], current[0]), Math.max(previous[1], current[1])]
             sorted.splice(i - 1, 1);
-            i -= 1  //when merged array length shrinks,
+            i--;  //when merged array length shrinks,
         }
     }
     return sorted;
@@ -482,7 +482,21 @@ Return the maximum total number of units that can be put on the truck.
 */
 
 function maximumUnits(boxTypes, truckSize) {
-    let dictionary = new Map(boxTypes);
-
+    boxTypes.sort((a, b) => b[1] - a[1]); //sort number of units each box has from most to least
+    let result = 0;
+    for (let i = 0; i < boxTypes.length; i++) {
+        if (truckSize <= 0) { //if the truck if full, break out of the look
+            break;
+        }
+        if (truckSize > boxTypes[i][0]) { //if the truck has space to fit all boxes of a type
+            result += boxTypes[i][0] * boxTypes[i][1]; //put all boxes*units in the truck
+            truckSize -= boxTypes[i][0]; //decrease the truck size left 
+        }
+        else {  //if the truck has space but not enough space for all boxes in that type
+            result += truckSize * boxTypes[i][1] //fit as many boxes of units as possible in the space left
+            truckSize -= boxTypes[i][0]; //decrease the truck size left
+        }
+    }
+    return result;
 }
 console.log(maximumUnits([[1, 3], [2, 2], [3, 1]], 4));
