@@ -480,8 +480,7 @@ You can choose any boxes to put on the truck as long as the number of boxes does
 
 Return the maximum total number of units that can be put on the truck.
 */
-
-function maximumUnits(boxTypes, truckSize) {
+function maximumUnits2(boxTypes, truckSize) {
     boxTypes.sort((a, b) => b[1] - a[1]); //sort number of units each box has from most to least
     let result = 0;
     for (let i = 0; i < boxTypes.length; i++) {
@@ -499,4 +498,15 @@ function maximumUnits(boxTypes, truckSize) {
     }
     return result;
 }
-console.log(maximumUnits([[1, 3], [2, 2], [3, 1]], 4));
+
+function maximumUnits(boxTypes, truckSize) {
+    boxTypes.sort((a, b) => b[1] - a[1]); //sort number of units each box has from most to least
+    let result = 0;
+    for (let i = 0; i < boxTypes.length; i++) {
+        let box = Math.min(boxTypes[i][0], truckSize);
+        result += box * boxTypes[i][1];
+        truckSize -= box;
+    }
+    return result;
+}
+console.log(maximumUnits([[5, 10], [2, 5], [4, 7], [3, 9]], 10));
