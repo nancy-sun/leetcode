@@ -48,7 +48,8 @@ function canConstruct2(ransomNote, magazine) {
     }
     return true;
 }
-console.log(canConstruct2("asdf", "asdfd"))
+
+console.log(canConstruct2("aa", "ab"))
 
 
 /* 242. valid anagram
