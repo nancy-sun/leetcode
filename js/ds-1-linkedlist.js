@@ -20,4 +20,15 @@ function hasCycle(head) {
     return false; //if they do not meet no cycle
 }
 
-console.log(hasCycle([3, 2, 0, -4]))
+function hasCycle2(head) {
+    let seen = new Set(); //store seen node, eliminate chance of repetitive nums with Set
+    let node = head; //set head to starting node
+    while (node !== null) {
+        if (seen.has(node)) return true; //if we have seen the node before, it means we get back to the node, aka hasCycle
+        seen.add(node); //for every new node we see, add to seen
+        node = node.next; //move on to the next node
+    }
+    return false; //when we get to the point of null, means we reach the tail of the linked list and we are never get back to the seen point, aka no cycle
+}
+
+console.log(hasCycle2([3, 2, 0, -4]))
