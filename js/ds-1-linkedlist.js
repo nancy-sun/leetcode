@@ -74,3 +74,35 @@ function mergeTwoLists2(list1, list2) {
 }
 
 console.log(mergeTwoLists([1, 2, 4], [1, 3, 4]));
+
+
+/* 83. Remove Duplicates from Sorted List
+Given the head of a sorted linked list, delete all duplicates such that each element appears only once. 
+Return the linked list sorted as well.
+*/
+
+// function deleteDuplicates(head) {//have no idea why this is not working
+//     let result = new Set;
+//     let node = head;
+//     while (node !== null && node.next !== null) {
+//         if (result.has(node.val)) {
+//             continue;
+//         }
+//         result.add(node.val);
+//         node = node.next;
+//     }
+//     return result;
+// }
+
+function deleteDuplicates(head) {//have no idea why this is not working
+    let node = head;
+    while (node !== null && node.next !== null) {
+        if (node.val == node.next.val) {
+            node.next = node.next.next; //if duplicate, skip the next node, move to the next next node, think of this as i+2 in array
+        } else {
+            node = node.next; //move to the next node,
+        }
+    }
+    return head
+}
+console.log(deleteDuplicates([1, 1, 2]))
