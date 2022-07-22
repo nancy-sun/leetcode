@@ -23,7 +23,7 @@ function hasCycle(head) {
 function hasCycle2(head) {
     let seen = new Set(); //store seen node, eliminate chance of repetitive nums with Set
     let node = head; //set head to starting node
-    while (node !== null) {
+    while (node) {
         if (seen.has(node)) return true; //if we have seen the node before, it means we get back to the node, aka hasCycle
         seen.add(node); //for every new node we see, add to seen
         node = node.next; //move on to the next node
@@ -31,7 +31,16 @@ function hasCycle2(head) {
     return false; //when we get to the point of null, means we reach the tail of the linked list and we are never get back to the seen point, aka no cycle
 }
 
-
+function hasCycle3(head) {
+    let seen = []; //why use Set if there's no repetition? lol
+    let node = head;
+    while (node) {
+        if (seen.includes(node)) return true;
+        seen.push(node);
+        node = node.next;
+    }
+    return false;
+}
 
 /* 21. Merge Two Sorted Lists
 You are given the heads of two sorted linked lists list1 and list2.
@@ -69,7 +78,7 @@ function mergeTwoLists2(list1, list2) {
         }
         node = node.next; //move to the next node
     } //merging until one list is empty
-    node.next = list1 || list2; //when one of the list gets to the end, attach the rest of the other list to it
+    node.next = list1 || list2; //when one of the lists gets to the end, attach the rest of the other list to it
     return head.next; //return the entire list with attached list.
 }
 
@@ -78,26 +87,14 @@ console.log(mergeTwoLists([1, 2, 4], [1, 3, 4]));
 
 /* 83. Remove Duplicates from Sorted List
 Given the head of a sorted linked list, delete all duplicates such that each element appears only once. 
-Return the linked list sorted as well.
+Return the linked list sorted as well. Return type ListNode
 */
 
-// function deleteDuplicates(head) {//have no idea why this is not working
-//     let result = new Set;
-//     let node = head;
-//     while (node !== null && node.next !== null) {
-//         if (result.has(node.val)) {
-//             continue;
-//         }
-//         result.add(node.val);
-//         node = node.next;
-//     }
-//     return result;
-// }
 
 function deleteDuplicates(head) {//have no idea why this is not working
     let node = head;
     while (node !== null && node.next !== null) {
-        if (node.val == node.next.val) {
+        if (node.val === node.next.val) {
             node.next = node.next.next; //if duplicate, skip the next node, move to the next next node, think of this as i+2 in array
         } else {
             node = node.next; //move to the next node,
@@ -105,4 +102,23 @@ function deleteDuplicates(head) {//have no idea why this is not working
     }
     return head
 }
-console.log(deleteDuplicates([1, 1, 2]))
+// deleteDuplicates([1, 1, 2]);
+
+/* 206. Reverse Linked List
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+*/
+//iterative
+function reverseList(head) {
+    let previous = null; //no previous value to start
+    let current = head;
+    let next = null;
+    while (current) {
+        next = current.next;
+        current.next = previous;
+        previous = current;
+        current = next;
+    }
+    return previous;
+}
+
+// reverseList([1,2,3,4,5])
