@@ -84,6 +84,37 @@ function mergeTwoLists2(list1, list2) {
 
 console.log(mergeTwoLists([1, 2, 4], [1, 3, 4]));
 
+/* 203. Remove Linked List Elements
+Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, 
+return the new head.
+*/
+function removeElements(head, val) {
+    if (!head) return head; //for when passing in head=[]
+    let node = head;
+    while (node.next) {
+        if (node.next.val === val) { //if the next node is the target
+            node.next = node.next.next; //skip next node and move on to next next node
+        } else {
+            node = node.next; //move on to next node
+        }
+    }
+    if (head.val === val) return head.next; //needs to validate after the while loop to eliminate all node value that equals to val
+    return head;
+}
+
+function removeElements2(head, val) {
+    let result = new ListNode();
+    let current = result;
+    while (head) {
+        if (head.val !== val) {
+            current.next = head; //when head value is not target value, save the nodes to the result
+            current = current.next; //move current to next nodes
+        }
+        head = head.next; //move to the next node
+    }
+    current.next = null;
+    return result.next;
+}
 
 /* 83. Remove Duplicates from Sorted List
 Given the head of a sorted linked list, delete all duplicates such that each element appears only once. 
