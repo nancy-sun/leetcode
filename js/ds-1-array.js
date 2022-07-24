@@ -510,3 +510,73 @@ function maximumUnits(boxTypes, truckSize) {
     return result;
 }
 console.log(maximumUnits([[5, 10], [2, 5], [4, 7], [3, 9]], 10));
+
+
+/* 697. Degree of an Array
+Given a non-empty array of non-negative integers nums, the degree of this array is defined as the maximum frequency of any one of its elements.
+
+Find the smallest possible length of a (contiguous) subarray of nums, that has the same degree as nums.
+*/
+
+/*1275. Find Winner on a Tic Tac Toe Game
+Given a 2D integer array moves where moves[i] = [rowi, coli] indicates that the ith move will be played on grid[rowi][coli]. 
+return the winner of the game if it exists (A or B). 
+In case the game ends in a draw return "Draw". If there are still movements to play return "Pending".
+You can assume that moves is valid (i.e., it follows the rules of Tic-Tac-Toe), the grid is initially empty, and A will play first.
+*/
+
+//what is wrong with this solution ...
+// function checkWin(arr) {
+//     let col = new Set();
+//     let row = new Set();
+//     let diag1 = 0;
+//     let diag2 = 0;
+//     if (arr.length >= 3) {
+//         for (let i = 0; i < arr.length; i++) {
+//             row.add(arr[i][0]);
+//             col.add(arr[i][1]);
+//             if (arr[i] === [0, 0] || arr[i] === [1, 1] || arr[i] === [2, 2]) diag1++;
+//             if (arr[i] === [0, 2] || arr[i] === [1, 1] || arr[i] === [2, 0]) diag2++;
+//         }
+//         if (col.size === 1 || row.size === 1 || diag1 === 3 || diag2 === 3) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
+// function tictactoe(moves) {
+//     let movesA = moves.filter((move, i) => i % 2 == 0);
+//     let movesB = moves.filter((move, i) => i % 2 !== 0);
+
+//     console.log(movesA)
+//     if (checkWin(movesA)) {
+//         return "A";
+//     } else if (checkWin(movesB)) {
+//         return "B";
+//     } else {
+//         if (moves.length === 9) {
+//             return "Draw";
+//         } else {
+//             return "Pending";
+//         }
+//     }
+// }
+
+
+
+function tictactoe(moves) {
+    const cases = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+    const grid = new Uint8Array(9);
+    for (let i = 0; i < moves.length; ++i) {
+        grid[moves[i][0] * 3 + moves[i][1]] = (i % 2) + 1;
+    }
+    for (let i = 0; i < cases.length; ++i) {
+        const role = grid[cases[i][0]];
+        if (role !== 0 && grid[cases[i][1]] === role && grid[cases[i][2]] === role) {
+            return role === 1 ? 'A' : 'B';
+        }
+    }
+    return moves.length === 9 ? "Draw" : "Pending";
+}
+console.log(tictactoe([[0, 0], [2, 0], [1, 1], [2, 1], [2, 2]]))
