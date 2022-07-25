@@ -597,4 +597,40 @@ function longestCommonPrefix(strs) {
     return strs[0];
 };
 
-console.log(longestCommonPrefix(["cir", "car"]))
+console.log(longestCommonPrefix(["cir", "car"]));
+
+/*412. Fizz Buzz*/
+function fizzBuzz(n) {
+    let result = [];
+    for (let i = 1; i <= n; i++) {
+        if (i % 3 === 0 && i % 5 === 0) {
+            result.push("FizzBuzz");
+        } else if (i % 3 === 0) {
+            result.push("Fizz");
+        } else if (i % 5 === 0) {
+            result.push("Buzz");
+        } else {
+            result.push(i.toString());
+        }
+    }
+    return result;
+}
+
+/*680. Valid Palindrome II
+Given a string s, return true if the s can be palindrome after deleting at most one character from it.
+*/
+
+/*408. Valid Word Abbreviation
+A string can be abbreviated by replacing any number of non-adjacent, non-empty substrings with their lengths. 
+The lengths should not have leading zeros.
+
+Given a string word and an abbreviation abbr, return whether the string matches the given abbreviation.
+A substring is a contiguous non-empty sequence of characters within a string.
+*/
+
+/*1523. Count Odd Numbers in an Interval Range
+Given two non-negative integers low and high. Return the count of odd numbers between low and high (inclusive).
+*/
+
+/*
+*/
