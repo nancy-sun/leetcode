@@ -580,3 +580,21 @@ function tictactoe(moves) {
     return moves.length === 9 ? "Draw" : "Pending";
 }
 console.log(tictactoe([[0, 0], [2, 0], [1, 1], [2, 1], [2, 2]]))
+
+
+/*14. Longest Common Prefix
+Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string "".
+*/
+function longestCommonPrefix(strs) {
+    if (strs.length <= 1) return strs.toString();
+    let firstWord = strs[0];
+    for (let i = 0; i < firstWord.length; i++) {
+        for (let str of strs) {
+            if (str[i] !== firstWord[i]) return str.slice(0, i);
+        }
+    }
+    return strs[0];
+};
+
+console.log(longestCommonPrefix(["cir", "car"]))
