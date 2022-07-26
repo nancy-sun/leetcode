@@ -619,6 +619,31 @@ function fizzBuzz(n) {
 /*680. Valid Palindrome II
 Given a string s, return true if the s can be palindrome after deleting at most one character from it.
 */
+function isPalindrome(s, left, right) {
+    while (left < right) {
+        if (s[left] !== s[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
+
+function validPalindrome(s) {
+    let left = 0;
+    let right = s.length - 1;
+    while (left < right) {
+        if (s[left] !== s[right]) {
+            return isPalindrome(s, left, right - 1) || isPalindrome(s, left + 1, right);
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
+console.log(validPalindrome("abcda"))
+
 
 /*408. Valid Word Abbreviation
 A string can be abbreviated by replacing any number of non-adjacent, non-empty substrings with their lengths. 
@@ -627,6 +652,29 @@ The lengths should not have leading zeros.
 Given a string word and an abbreviation abbr, return whether the string matches the given abbreviation.
 A substring is a contiguous non-empty sequence of characters within a string.
 */
+function validWordAbbreviation(word, abbr) {
+    let i = 0;
+    let j = 0;
+    let num = 0;
+    while (i < abbr.length && j < word.length) {
+        if (!isNaN(abbr[i])) { //!isNaN means it's a number 
+            num = num * 10 + Number(abbr[i]);
+            if (num === 0) return false; //getting here means there was a number, but after *10, it gets to 0, which means there's a leading 0
+            i++;
+        } else if (num > 0) {
+            j += num;
+            num = 0;
+        } else if (abbr[i] === word[j]) {
+            i++;
+            j++;
+        } else {
+            return false;
+        }
+    }
+    return i === abbr.length && j + num === word.length;
+}
+
+console.log(validWordAbbreviation("internationalization", "i12iz4n"))
 
 /*1523. Count Odd Numbers in an Interval Range
 Given two non-negative integers low and high. Return the count of odd numbers between low and high (inclusive).
