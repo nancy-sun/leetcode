@@ -679,6 +679,23 @@ console.log(validWordAbbreviation("internationalization", "i12iz4n"))
 /*1523. Count Odd Numbers in an Interval Range
 Given two non-negative integers low and high. Return the count of odd numbers between low and high (inclusive).
 */
+function countOdds(low, high) {
+    let count = 0;
+    for (let i = low; i <= high; i++) {
+        if (i % 2 !== 0) count++;
+    }
+    return count;
+}
+
+function countOdds2(low, high) {
+    let count = Math.floor((high - low + 1) / 2);
+    if (low % 2 !== 0 && high % 2 !== 0) {
+        return count + 1;
+    }
+    return count;
+}
+
+console.log(countOdds2(3, 7))
 
 /*
 */
