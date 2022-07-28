@@ -781,3 +781,45 @@ function searchRange2(nums, target) {
 }
 
 console.log(searchRange2([5, 7, 7, 8, 8, 10], 6))
+
+
+/*268. Missing Number
+Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+*/
+function missingNumber(nums) {
+    let sum = nums.length;
+    for (let i = 0; i < nums.length; i++) {
+        sum += i - nums[i];
+    }
+    return sum;
+}
+
+/*136. Single Number
+Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+You must implement a solution with a linear runtime complexity and use only constant extra space.
+*/
+function singleNumber(nums) {
+    let lookup = new Map();
+    for (let num of nums) {
+        if (lookup.has(num)) {
+            lookup.set(num, 0)
+        } else {
+            lookup.set(num, 1);
+        }
+    }
+    let result;
+    for (let [key, value] of lookup) {
+        if (value === 1) result = key;
+    }
+    return result;
+}
+
+function singleNumber1(nums) {
+    let num = 0; //change when the num is found
+    for (let n of nums) {
+        num ^= n; // ^ XOR, aka if they are the same, output will be 0, if different, output will be n 
+        console.log(num)
+    }
+    return num;
+}
+console.log(singleNumber1([2, 2, 1]))
