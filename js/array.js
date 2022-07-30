@@ -922,3 +922,60 @@ function isPalindrome(s) {
     return str === reversed;
 }
 console.log(isPalindrome("A man, a plan, a canal: Panama"));
+
+/*697. Degree of an Array
+Given a non-empty array of non-negative integers nums, the degree of this array is defined as the maximum frequency of any one of its elements.
+
+Your task is to find the smallest possible length of a (contiguous) subarray of nums, that has the same degree as nums.
+*/
+
+
+function findShortestSubArray(nums) {
+    if (nums.length === 1) return nums.length;
+    let lookup = new Map();
+    let first = new Map();
+    let last = new Map();
+    let largest = -Infinity;
+    for (let i = 0; i < nums.length; i++) {
+        if (lookup.has(nums[i])) {
+            lookup.set(nums[i], lookup.get(nums[i]) + 1);
+        } else {
+            lookup.set(nums[i], 1);
+        }
+        largest = Math.max(largest, lookup.get(nums[i])); //update largest
+        if (!first.has(nums[i])) {
+            first.set(nums[i], i); //if haven't seen the num before, store to first
+        }
+        last.set(nums[i], i); //update the num to its last occurrence
+    }
+    let shortest = Infinity;
+    for (const [key, value] of lookup) {
+        if (value === largest) {
+            shortest = Math.min(shortest, last.get(key) - first.get(key) + 1)
+        }
+    }
+    return shortest;
+}
+console.log(findShortestSubArray([1, 2, 2, 3, 1]))
+
+/*1304. Find N Unique Integers Sum up to Zero
+Given an integer n, return any array containing n unique integers such that they add up to 0.
+*/
+function sumZero(n) {
+    let result = [];
+    if (n % 2 !== 0) { //if n is odd, push a 0 to result, and make length of the rest of nums even
+        result.push(0);
+    }
+    for (let i = 1; i <= n / 2; i++) { //since we have even nums left to push to result, we just push the num and its negative value to result, to keep sum at 0
+        result.push(i, -i);
+    }
+    return result;
+}
+console.log(sumZero(5))
+
+/*243. Shortest Word Distance
+Given an array of strings wordsDict and two different strings that already exist in the array word1 and word2, return the shortest distance between these two words in the list.
+*/
+function shortestDistance(wordsDict, word1, word2) {
+}
+console.log(shortestDistance(["practice", "makes", "perfect", "coding", "makes"], "makes", "coding"))
