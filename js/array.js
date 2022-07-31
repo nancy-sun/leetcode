@@ -973,9 +973,53 @@ function sumZero(n) {
 }
 console.log(sumZero(5))
 
-/*243. Shortest Word Distance
-Given an array of strings wordsDict and two different strings that already exist in the array word1 and word2, return the shortest distance between these two words in the list.
+/*344. Reverse String
+Write a function that reverses a string. The input string is given as an array of characters s.
+
+You must do this by modifying the input array in-place with O(1) extra memory.
 */
-function shortestDistance(wordsDict, word1, word2) {
+function reverseString(s) {
+    let i = 0;
+    let j = s.length - 1;
+    while (i < j) {
+        [s[i], s[j]] = [s[j], s[i]];
+        i++;
+        j--;
+    }
+    return s;
 }
-console.log(shortestDistance(["practice", "makes", "perfect", "coding", "makes"], "makes", "coding"))
+
+//recursion
+function reverseString1(s) {
+}
+
+console.log(reverseString1(["H", "a", "n", "n", "a", "h"]))
+
+/*202. Happy Number
+Write an algorithm to determine if a number n is happy.
+
+A happy number is a number defined by the following process:
+
+Starting with any positive integer, replace the number by the sum of the squares of its digits.
+Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+Those numbers for which this process ends in 1 are happy.
+Return true if n is a happy number, and false if not.
+*/
+
+function isHappy(n) {
+    let set = new Set();
+    let result = n;
+    while (result !== 1) {
+        result = 0;
+        while (n !== 0) {
+            result += (n % 10) ** 2;
+            n = parseInt(n / 10);
+        }
+        if (set.has(result)) return false;
+        set.add(result);
+        n = result;
+    }
+    return true;
+}
+
+console.log(isHappy(19));
